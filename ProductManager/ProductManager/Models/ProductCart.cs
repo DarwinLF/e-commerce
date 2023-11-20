@@ -10,5 +10,12 @@ namespace ProductManager.Models
         public int ProductQuantity { get; set; }
         public Product Product { get; set; } = null!;
         public Cart Cart { get; set; } = null!;
+
+        public ProductCart(int productId, int cartId, int productQuantity)
+        {
+            ProductId = productId;
+            CartId = cartId;
+            ProductQuantity = productQuantity;
+        }
     }
 }
