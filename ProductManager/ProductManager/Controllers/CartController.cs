@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProductManager.Models;
 using System.Net;
 
 namespace ProductManager.Controllers
@@ -17,7 +16,7 @@ namespace ProductManager.Controllers
 
         // GET: CartController
         [HttpGet(Name = "GetCart")]
-        public async Task<ActionResult<Object>> Index(string userName)
+        public ActionResult<Object> Index(string userName)
         {
             var cart = _context.Carts
                 .Select(c => new

@@ -2,26 +2,26 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
 
-export default function Login() {
+export default function Signup() {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axios.post('/api/login', { username, password });
-            // Handle successful login
+        try{
+            const response = await axios.post('/api/register', { username, password });
+            // Handle successful registration
             console.log(response.data);
             navigate("/home");
-        } catch(error) {
+        } catch (error) {
             console.error(error);
         }
     }
 
-    return(
-        <form onSubmit={handleLogin}>
+    return (
+        <form onSubmit={handleSignup}>
             <input
                 className='inputBox'
                 type='text'
@@ -36,8 +36,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button className='button' type="submit">Login</button>
-            <a onClick={() => navigate("/Signup")}>New user? Sign up</a>
+            <button className='button' type="submit">Sign up</button>
         </form>
     );
 }
