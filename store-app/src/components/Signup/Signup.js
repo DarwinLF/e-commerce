@@ -11,7 +11,7 @@ export default function Signup() {
         e.preventDefault();
 
         try{
-            const response = await axios.post('/api/register', { username, password });
+            const response = await axios.post('/api/register', { userName, password });
             // Handle successful registration
             console.log(response.data);
             navigate("/home");

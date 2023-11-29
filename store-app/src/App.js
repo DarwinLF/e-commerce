@@ -1,58 +1,32 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route, Redirect} from 'react-router-dom';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import Layout from "./components/layout";
 import Home from "./components/home";
-import Login from './components/Login/Login';
-import Dashboard from './components/Dashboard/Dashboard';
-import Preferences from './components/Preferences/Preferences';
-
-function PrivateRoute({component: Component, isAuthenticated, ...rest}) {
-  <Route
-    {...rest}
-    render={(props) =>
-      isAuthenticated ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/login" />
-      )
-    }  
-  />
-}
-
-function PublicRoute({component: Component, isAuthenticated, restricted, ...rest}) {
-  <Route
-    {...rest}
-    render={(props) =>
-      isAuthenticated && restricted ? (
-        <Redirect to="/home" />
-      ) : (
-        <Component {...props} />
-      )
-    }  
-  />
-}
+import Login from "./components/Login/Login";
+import Signup from "./components/Signup/Signup";
+import Product from "./components/Product/product";
+import Cart from "./components/Cart/Cart";
 
 function App() {
-  const isAuthenticated = false;
+  //const isAuthenticated = false;
 
-  <Router>
-      <Switch>
-        <PublicRoute
-          restricted={false}
-          isAuthenticated={isAuthenticated}
-          component={LoginForm}
-          path="/login"
-          exact
-        />
-        <PrivateRoute
-          isAuthenticated={isAuthenticated}
-          component={Dashboard}
-          path="/home"
-          exact
-        />
-      </Switch>
-    </Router>
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+          <Route index path='/' element={<Home/>}/>
+          <Route path='/Login' element={<Login/>}/>
+          <Route path='/Signup' element={<Signup/>}/>
+          <Route path='/Product' element={<Product/>}/>
+          <Route path='/Cart' element={<Cart/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+
+
+  
 }
 
 export default App;

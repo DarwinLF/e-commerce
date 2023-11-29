@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -64,6 +65,7 @@ namespace ProductManager.Controllers
 
         // POST: ProductController/Create
         [HttpPost("Create")]
+        [Authorize(Roles = "Admin")]
         //[ValidateAntiForgeryToken]
         public async Task<HttpStatusCode> Create(Product product)
         {
@@ -74,24 +76,31 @@ namespace ProductManager.Controllers
 
         // POST: ProductController/Edit/5
         [HttpPut("Edit")]
+        [Authorize(Roles = "Admin")]
         //[ValidateAntiForgeryToken]
         public async Task<HttpStatusCode> Edit(Product product)
         {
-            Product oldProduct = await _context.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
-            oldProduct.Name = product.Name;
-            oldProduct.Price = product.Price;
-            oldProduct.Quantity = product.Quantity;
-            oldProduct.Image = product.Image;
-            await _context.SaveChangesAsync();
-            return HttpStatusCode.OK;
+            Product? oldProduct = await _context.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
+            if(oldProduct != null) {
+                oldProduct.Name = product.Name;
+                oldProduct.Price = product.Price;
+                oldProduct.Quantity = product.Quantity;
+                oldProduct.Image = product.Image;
+                await _context.SaveChangesAsync();
+                return HttpStatusCode.OK;
+            }
+
+            return HttpStatusCode.NotFound;
+
         }
 
         // POST: ProductController/Delete/5
         [HttpDelete("Delete/{Id}")]
+        [Authorize(Roles = "Admin")]
         //[ValidateAntiForgeryToken]
         public async Task<HttpStatusCode> Delete(int id)
         {
-            Product product = await _context.Products.FirstOrDefaultAsync(product => product.Id == id);
+            Product? product = await _context.Products.FirstOrDefaultAsync(product => product.Id == id);
             if(product != null)
             {
                 _context.Products.Remove(product);

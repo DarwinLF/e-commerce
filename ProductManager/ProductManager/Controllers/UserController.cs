@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ProductManager.DTO;
-using ProductManager.Interfaces;
+using Microsoft.IdentityModel.Tokens;
+using ProductManager.Services;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
 using System.Text;
 
 namespace ProductManager.Controllers
@@ -11,86 +14,67 @@ namespace ProductManager.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly Context _context;
-        private readonly ITokenService _tokenService;
+        private readonly IAuthService _authService;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(Context context, ITokenService tokenService)
+        public UserController(IAuthService authService, ILogger<UserController> logger)
         {
-            _context = context;
-            _tokenService = tokenService;
+            _authService = authService;
+            _logger = logger;
         }
 
         // POST: ProductController/Create
         [HttpPost("Signup")]
         //[ValidateAntiForgeryToken]
-        public async Task<ActionResult<UserDto>> Signup(string username, string password)
+        public async Task<IActionResult> Signup(UserDTO userDTO)
         {
-            if(_context.Users.Any(u => u.UserName == username))
+            try
             {
-                return BadRequest("UserName alredy exist");
-            }
-            else
-            {
-                User user = new User(username, EncodePassword(password));
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-
-                return new UserDto
+                if(!ModelState.IsValid)
                 {
-                    Username = user.UserName,
-                    Token = _tokenService.CreateToken(user)
-                };
+                    return BadRequest("Invalid payload");
+                }
+
+                var (status, message) = await _authService.Signup(userDTO, UserRoles.User);
+                if(status == 0)
+                {
+                    return BadRequest(message);
+                }
+
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         // POST: ProductController/Create
         [HttpPost("Login")]
         //[ValidateAntiForgeryToken]
-        public async Task<ActionResult<UserDto>> Login(string username, string password)
-        {
-            User user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == username);
-
-            if(user == null)
-            {
-                return Unauthorized("Invalid userName");
-            }
-
-            if(DecodePassword(user.Password) != password)
-            {
-                return Unauthorized("Invalid password");
-            }
-
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
-            };
-        }
-
-        private string EncodePassword(string password)
+        public async Task<IActionResult> Login(UserDTO userDTO)
         {
             try
             {
-                byte[] encData_byte = new byte[password.Length];
-                encData_byte = Encoding.UTF8.GetBytes(password);
-                string encodedData = Convert.ToBase64String(encData_byte);
-                return encodedData;
-            }
-            catch (Exception ex) {
-                throw new Exception("Error in base64Encode" + ex.Message);
-            }
-        }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid payload");
+                }
 
-        private string DecodePassword(string encodedData)
-        {
-            UTF8Encoding encoder = new UTF8Encoding();
-            Decoder utf8Decode = encoder.GetDecoder();
-            byte[] todecode_byte = Convert.FromBase64String(encodedData);
-            int charCount = utf8Decode.GetCharCount(todecode_byte, 0, todecode_byte.Length);
-            char[] decoded_char = new char[charCount];
-            utf8Decode.GetChars(todecode_byte, 0, todecode_byte.Length, decoded_char, 0);
-            string result = new String(decoded_char);
-            return result;
+                var (status, message) = await _authService.Login(userDTO);
+                if (status == 0)
+                {
+                    return BadRequest(message);
+                }
+
+                return Ok(message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }
