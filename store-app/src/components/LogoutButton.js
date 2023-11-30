@@ -1,17 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../provider/authProvider";
 import { useHistory} from "react-router-dom";
 
 export default function LogoutButton() {
-    const history = useHistory();
+    const {setToken} = useAuth();
+    const navigate = useNavigate();
 
     const handelLogout = () => {
-        localStorage.removeItem("token");
-        //Clear any other user-specific data
-        history.push("/login");
+        setToken(null);
+        navigate("/");
     };
 
     return (
-        <button onClick={handelLogout}>
+        <button className="mr-4" onClick={handelLogout}>
             Logout
         </button>
     );

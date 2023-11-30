@@ -1,7 +1,11 @@
 import { Outlet} from "react-router-dom";
 import { Navbar, Typography} from "@material-tailwind/react";
+import { useAuth } from "../provider/authProvider";
+import LogoutButton from "./LogoutButton";
 
 const Layout = () => {
+    const {token} = useAuth();
+
     return (
         <div className="flex flex-col min-h-screen">
           <Navbar 
@@ -36,7 +40,8 @@ const Layout = () => {
                 </Typography>
               </div>
             </div>
-            <div className="text-white ml-7">
+            {!token ? 
+              <div className="text-white ml-7">
               <Typography
                 as="a"
                 href="/Login"
@@ -45,6 +50,9 @@ const Layout = () => {
                 Login
               </Typography>
             </div>
+            : <div className="flex">
+                <LogoutButton/>
+              </div>}
           </Navbar>
 
           <Outlet />
