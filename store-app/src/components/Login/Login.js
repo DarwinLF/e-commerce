@@ -6,22 +6,24 @@ import { useAuth } from '../../provider/authProvider';
 const Login = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const {setToken} = useAuth();
+    const {setToken, setProfileUserName, setUserRole} = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        try {
-            axios.post('https://localhost:7277/User/Login', { userName, password })
-                .then((response) => {
-                    console.log(response.data);
-                    setToken(response.data);
-                    navigate("/");
-                });
-        } catch(error) {
-            console.log(error);
-        }
+        axios.post('https://localhost:7277/User/Login', { userName, password })
+            .then((response) => {
+                console.log(response.data);
+                setToken(response.data.message);
+                setProfileUserName(userName);
+                setUserRole(response.data.role);
+                navigate("/");
+            })
+            .catch((error) => {
+                //add toast
+                alert(error.response.data);
+            });
     }
 
     return(

@@ -35,13 +35,13 @@ namespace ProductManager.Controllers
                     return BadRequest("Invalid payload");
                 }
 
-                var (status, message) = await _authService.Signup(userDTO, UserRoles.User);
+                var (status, message, role) = await _authService.Signup(userDTO, UserRoles.User);
                 if(status == 0)
                 {
                     return BadRequest(message);
                 }
 
-                return Ok(message);
+                return Ok(new {message, role});
             }
             catch (Exception ex)
             {
@@ -62,13 +62,13 @@ namespace ProductManager.Controllers
                     return BadRequest("Invalid payload");
                 }
 
-                var (status, message) = await _authService.Login(userDTO);
+                var (status, message, role) = await _authService.Login(userDTO);
                 if (status == 0)
                 {
                     return BadRequest(message);
                 }
 
-                return Ok(message);
+                return Ok(new { message, role });
             }
             catch (Exception ex)
             {

@@ -11,8 +11,8 @@ using ProductManager.Data;
 namespace ProductManager.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231129002253_fixing default user 2")]
-    partial class fixingdefaultuser2
+    [Migration("20231204220520_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,15 @@ namespace ProductManager.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad376a8f-9eab-4bb9-9fca-30b01540f445",
+                            ConcurrencyStamp = "f1c1bbec-dde1-43e3-8a31-404c6eb1f943",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -137,15 +146,15 @@ namespace ProductManager.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1",
+                            Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "63bdb7d5-8a7b-4848-872b-fafbdb0a0e4a",
+                            ConcurrencyStamp = "ed6fe7fa-f87a-431d-818f-7b20c26d3b5b",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC3UZ7fh5AR3CwSei2uvDwXT1Pp60B6ivdG5fPlirQTzt6LFTAmjt0tixAcO4lw61A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENGyAUH/kC/UpESkMt//QBxhKzqe8Gw8dcBnsQ69zNDCa5Y5GYYkspzHnADCUJo2uw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8ab3b1c3-fb7f-48b9-bfc2-d2be14b878fe",
+                            SecurityStamp = "5bcd086c-3e2f-4ef5-abdf-a6d224cb7f7c",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -209,6 +218,13 @@ namespace ProductManager.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            RoleId = "ad376a8f-9eab-4bb9-9fca-30b01540f445"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Layout from "../components/layout";
@@ -7,9 +7,10 @@ import Product from "../components/Product/product";
 import Cart from "../components/Cart/Cart";
 import Signup from "../components/Signup/Signup";
 import Login from "../components/Login/Login";
+import Profile from "../components/Profile/profile";
 
 const Routes = () => {
-    const {token} = useAuth();
+    const {token, userRole} = useAuth();
 
     // Define public routes accessible to all users
     const routesForPublic = [
@@ -26,12 +27,17 @@ const Routes = () => {
     // Define routes accessible only to authenticated users
     const routesForAuthenticatedOnly = [
         {
-            path: "/Cart",
+            path: "/",
             element: <ProtectedRoute/>,
             children: [
                 {
                     path: "/Cart",
+                    loader: () => (userRole === "User" ? null : redirect("/")),
                     element: <Cart/>,
+                },
+                {
+                    path: "/Profile",
+                    element: <Profile/>,
                 },
             ],
         },

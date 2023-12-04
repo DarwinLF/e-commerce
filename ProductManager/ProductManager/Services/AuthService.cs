@@ -19,12 +19,12 @@ namespace ProductManager.Services
             _configuration = configuration;
         }
 
-        public async Task<(int, string)> Signup(UserDTO userDTO, string role)
+        public async Task<(int, string, string)> Signup(UserDTO userDTO, string role)
         {
             IdentityUser userExists = await _userManager.FindByNameAsync(userDTO.Username);
             if (userExists != null)
             {
-                return (0, "User Alredy exists");
+                return (0, "User Alredy exists", "");
             }
 
             IdentityUser user = new IdentityUser()
@@ -35,7 +35,7 @@ namespace ProductManager.Services
             IdentityResult createUserResult = await _userManager.CreateAsync(user, userDTO.Password);
             if (!createUserResult.Succeeded)
             {
-                return (0, "User creation failed! Please check user details and try again.");
+                return (0, "User creation failed! Please check user details and try again.", "");
             }
 
             if (!await _roleManager.RoleExistsAsync(role))
@@ -51,22 +51,22 @@ namespace ProductManager.Services
             return await GetToken(user);
         }
 
-        public async Task<(int, string)> Login(UserDTO userDTO)
+        public async Task<(int, string, string)> Login(UserDTO userDTO)
         {
             IdentityUser? user = await _userManager.FindByNameAsync(userDTO.Username);
             if (user == null)
             {
-                return (0, "Invalid Username");
+                return (0, "Invalid Username", "");
             }
             if (!await _userManager.CheckPasswordAsync(user, userDTO.Password))
             {
-                return (0, "Invalid password");
+                return (0, "Invalid password", "");
             }
 
             return await GetToken(user);
         }
 
-        private async Task<(int, string)> GetToken(IdentityUser user)
+        private async Task<(int, string, string)> GetToken(IdentityUser user)
         {
             IList<string> userRoles = await _userManager.GetRolesAsync(user);
 
@@ -83,7 +83,7 @@ namespace ProductManager.Services
 
             string token = GenerateToken(authClaims);
 
-            return (1, token);
+            return (1, token, userRoles[0]);
         }
 
         private string GenerateToken(IEnumerable<Claim> claims)

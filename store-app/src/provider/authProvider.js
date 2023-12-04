@@ -12,24 +12,34 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     //state to hold the authentication token
     const [token, setToken] = useState(localStorage.getItem("token"));
+    const [profileUserName, setProfileUserName] = useState(localStorage.getItem("userName"));
+    const [userRole, setUserRole] = useState(localStorage.getItem("userRole"));
 
     useEffect(() => {
         if(token) {
             axios.defaults.headers.common["Authorization"] = "Bearer " + token;
             localStorage.setItem("token", token);
+            localStorage.setItem("userName", profileUserName);
+            localStorage.setItem("userRole", userRole);
         } else {
             delete axios.defaults.headers.common["Authorization"];
             localStorage.removeItem("token");
+            localStorage.removeItem("userName");
+            localStorage.removeItem("userRole");
         }
-    }, [token]);
+    }, [token, profileUserName, userRole]);
 
     //Memoized value of the authentication context
     const contextValue = useMemo(
         () => ({
             token,
             setToken,
+            profileUserName,
+            setProfileUserName,
+            userRole,
+            setUserRole,
         }),
-        [token]
+        [token, profileUserName, userRole]
     );
 
     return (
