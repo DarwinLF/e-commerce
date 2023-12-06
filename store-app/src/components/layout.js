@@ -67,7 +67,9 @@ const Layout = () => {
             }
           </Navbar>
 
-          <Outlet />
+          <header className="App-header bg-zinc-700">
+            <Outlet />
+          </header>
         </div>
     )
 }

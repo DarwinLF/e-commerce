@@ -24,6 +24,10 @@
   color: white;
 }
 
+.App-header input {
+  color: black !important;
+}
+
 .App-link {
   color: #61dafb;
 }

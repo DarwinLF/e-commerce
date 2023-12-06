@@ -1,13 +1,12 @@
-﻿namespace ProductManager.Models
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ProductManager.Models
 {
-    public class Product
+    public class ProductDTO
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         public float Price { get; set; }
         public int Quantity { get; set; }
         public string Image { get; set; }
-        public List<ProductCart> ProductCarts { get; set; } = new();
     }
 }

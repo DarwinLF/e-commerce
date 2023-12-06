@@ -4,6 +4,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import Layout from "../components/layout";
 import Home from "../components/home";
 import Product from "../components/Product/product";
+import AddProduct from "../components/Product/addProduct";
 import Cart from "../components/Cart/Cart";
 import Signup from "../components/Signup/Signup";
 import Login from "../components/Login/Login";
@@ -38,6 +39,11 @@ const Routes = () => {
                 {
                     path: "/Profile",
                     element: <Profile/>,
+                },
+                {
+                    path: "/AddProduct",
+                    loader: () => (userRole === "Admin" ? null : redirect("/")),
+                    element: <AddProduct/>,
                 },
             ],
         },
