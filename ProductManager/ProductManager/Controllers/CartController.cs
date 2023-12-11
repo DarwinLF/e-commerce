@@ -18,7 +18,7 @@ namespace ProductManager.Controllers
 
         // GET: CartController
         [HttpGet(Name = "GetCart")]
-        public ActionResult<Object> Index(string userName)
+        public ActionResult<Object> Index([FromQuery] string userName)
         {
             var cart = _context.Carts
                 .Select(c => new
@@ -33,6 +33,8 @@ namespace ProductManager.Controllers
                     }).ToList()
                 }).Where(c => c.UserName == userName).FirstOrDefault();
 
+            Console.WriteLine(cart);
+
             if (cart == null)
             {
                 return NotFound();
@@ -46,17 +48,14 @@ namespace ProductManager.Controllers
         // POST: ProductController/Create
         [HttpPost("Add")]
         //[ValidateAntiForgeryToken]
-        public async Task<HttpStatusCode> Add(Product product, int quantity)
+        public async Task<HttpStatusCode> Add(CartDTO cartDTO)
         {
-            if(await ExistingCart("prueba"))
+            if (!await ExistingCart(cartDTO.UserName))
             {
-                await AddProductToCart(product, quantity, "prueba");
+                await MakeNewCart(cartDTO.UserName);
             }
-            else
-            {
-                await MakeNewCart("prueba");
-                await AddProductToCart(product, quantity, "prueba");
-            }
+
+            await AddProductToCart(cartDTO.ProductName, cartDTO.Quantity, cartDTO.UserName);
 
             return HttpStatusCode.OK;
         }
@@ -82,9 +81,10 @@ namespace ProductManager.Controllers
             await _context.SaveChangesAsync();
         }
 
-        private async Task AddProductToCart(Product product, int quantity, string userName)
+        private async Task AddProductToCart(string productName, int quantity, string userName)
         {
             Cart? cart = await _context.Carts.Include(c => c.ProductCarts).FirstOrDefaultAsync(c => c.UserName == userName);
+            Product product = await _context.Products.FirstOrDefaultAsync(p => p.Name == productName);
 
             if(cart.ProductCarts.Any(pc => pc.ProductId == product.Id))
             {
