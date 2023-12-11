@@ -1,5 +1,6 @@
 ﻿namespace ProductManager.Models
 {
+    [Index(nameof(Name), IsUnique = true)]
     public class Product
     {
         [Key]

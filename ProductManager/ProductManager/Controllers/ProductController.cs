@@ -103,32 +103,40 @@ namespace ProductManager.Controllers
         [HttpPost("Create")]
         [Authorize(Roles = "Admin")]
         //[ValidateAntiForgeryToken]
-        public async Task<HttpStatusCode> Create()
+        public async Task<IActionResult> Create()
         {
-            var imageFile = Request.Form.Files[0];
-
-            var filePath = "./Images/" + imageFile.FileName;
-
-            Product product = new Product()
+            try
             {
-                Name = Request.Form["name"],
-                Price = float.Parse(Request.Form["price"]),
-                Quantity = Int32.Parse(Request.Form["quantity"]),
-                Image = filePath,
-            };
+                var imageFile = Request.Form.Files[0];
 
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+                var filePath = "./Images/" + imageFile.FileName;
 
-            if (!System.IO.File.Exists(filePath))
-            {
-                using (var fileStream = System.IO.File.Create(filePath))
+                Product product = new Product()
                 {
-                    imageFile.CopyTo(fileStream);
-                }
-            }
+                    Name = Request.Form["name"],
+                    Price = float.Parse(Request.Form["price"]),
+                    Quantity = Int32.Parse(Request.Form["quantity"]),
+                    Image = filePath,
+                };
 
-            return HttpStatusCode.Created;
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+
+                if (!System.IO.File.Exists(filePath))
+                {
+                    using (var fileStream = System.IO.File.Create(filePath))
+                    {
+                        imageFile.CopyTo(fileStream);
+                    }
+                }
+
+                return Created("", product);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Duplicate Name");
+            }
+            
         }
 
         // POST: ProductController/Edit/5
