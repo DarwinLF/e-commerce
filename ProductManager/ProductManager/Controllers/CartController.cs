@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using ProductManager.Functions;
 
 namespace ProductManager.Controllers
 {
@@ -23,14 +24,16 @@ namespace ProductManager.Controllers
             var cart = _context.Carts
                 .Select(c => new
                 {
-                    c.Id,
                     c.UserName,
                     c.TotalPrice,
                     Products = c.ProductCarts.Select(pc => new
                     {
-                        ProductName = _context.Products.FirstOrDefault(p => p.Id == pc.ProductId).Name,
-                        pc.ProductQuantity
-                    }).ToList()
+                        //Product = _context.Products.FirstOrDefault(p => p.Id == pc.ProductId),
+                        pc.Product.Name,
+                        pc.Product.Price,
+                        pc.ProductQuantity,
+                        Image = functions.GetImage(pc.Product.Image),
+                    }).ToList(),
                 }).Where(c => c.UserName == userName).FirstOrDefault();
 
             Console.WriteLine(cart);
@@ -117,13 +120,13 @@ namespace ProductManager.Controllers
         //}
 
         // POST: ProductController/Delete/5
-        [HttpDelete("DeleteItem/{userName}")]
+        [HttpDelete("DeleteItem")]
         //[ValidateAntiForgeryToken]
         public async Task<HttpStatusCode> DeleteItem(string userName, int index)
         {
             Cart? cart = await _context.Carts.Include(c => c.ProductCarts).FirstOrDefaultAsync(c => c.UserName == userName);
 
-            if(cart != null)
+            if (cart != null)
             {
                 float productPrice = _context.Products.FirstOrDefault(p => p.Id == cart.ProductCarts[index].ProductId).Price;
                 cart.TotalPrice -= cart.ProductCarts[index].ProductQuantity * productPrice;

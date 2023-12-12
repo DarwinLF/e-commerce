@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 export default function Product() {
-    const {userRole, profileUserName} = useAuth();
+    const {token, userRole, profileUserName} = useAuth();
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [quantities, setQuantities] = useState([]);

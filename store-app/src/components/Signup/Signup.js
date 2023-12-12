@@ -15,7 +15,7 @@ export default function Signup() {
         axios.post('https://localhost:7277/User/Signup', { userName, password })
             .then((response) => {
                 console.log(response.data);
-                setToken(response.data);
+                setToken(response.data.message);
                 setProfileUserName(userName);
                 setUserRole(response.data.role);
                 navigate("/");

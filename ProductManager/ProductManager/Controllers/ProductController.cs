@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.IO;
+using ProductManager.Functions;
 
 namespace ProductManager.Controllers
 {
@@ -37,7 +38,7 @@ namespace ProductManager.Controllers
                     Name = item.Name,
                     Price = item.Price,
                     Quantity = item.Quantity,
-                    Image = GetImage(item.Image)
+                    Image = functions.GetImage(item.Image)
                 });
             }
 
@@ -46,34 +47,6 @@ namespace ProductManager.Controllers
 
 
             return productsDTO;
-        }
-
-        private string GetImage(string imagePath)
-        {
-            try
-            {
-                // Open the file stream
-                using (FileStream fileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-                {
-                    // Create a buffer to hold the bytes read from the file
-                    byte[] buffer = new byte[fileStream.Length];
-
-                    // Read the file into the buffer
-                    fileStream.Read(buffer, 0, (int)fileStream.Length);
-
-                    // Convert the buffer to a Base64 string
-                    string base64String = Convert.ToBase64String(buffer);
-
-                    // Display the Base64 string
-                    Console.WriteLine(base64String);
-                    return base64String;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return "Invaild Image";
-            }
         }
 
         // GET: ProductController/Details/5
