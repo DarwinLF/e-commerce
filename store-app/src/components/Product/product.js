@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 export default function Product() {
-    const {token, userRole, profileUserName} = useAuth();
-    const navigate = useNavigate();
+    const {userRole, profileUserName} = useAuth();
     const [products, setProducts] = useState([]);
     const [quantities, setQuantities] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get('https://localhost:7277/Product')
@@ -26,6 +26,7 @@ export default function Product() {
                     const imageUrl = URL.createObjectURL(blob);
 
                     return {
+                        id: product.id,
                         name: product.name,
                         price: product.price,
                         quantity: product.quantity,
@@ -61,6 +62,10 @@ export default function Product() {
             });
     };
 
+    const handleDelete = () => {
+
+    }
+
     return (
         <div>
             {userRole === "Admin" ? 
@@ -69,13 +74,17 @@ export default function Product() {
             <div>
                 <h1>Product list</h1>
                 {products && products.map((item, index) => (
-                    <div className="flex flex-row" key={item.name}>
+                    <div className="flex flex-row" key={item.id}>
                         <h3>{item.name}</h3>
                         {item.imageUrl && <img src={item.imageUrl} alt="not found" width={"200px"} height={"200px"}/>}
                         <h3>{item.price}</h3>
                         <h3>{item.quantity}</h3>
                         {userRole === "Admin" ?
-                            <button className="py-1 px-3 border rounded">Edit</button> 
+                            <div>
+                                <button className="py-1 px-3 border rounded" onClick={() => navigate(`/EditProduct/${item.id}`)}>Edit</button>
+                                <button className="py-1 px-3 border rounded" onClick={() => navigate(`/DeleteProduct/${item.id}`)}>Delete</button>  
+
+                            </div>
                             : <div className="flex flex-col">
                                 <input
                                     className='inputBox'

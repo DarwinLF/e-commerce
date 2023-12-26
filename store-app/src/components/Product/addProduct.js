@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 export default function AddProduct() {
     const [name, setName] = useState();
     const [price, setPrice] = useState();
     const [quantity, setQuantity] = useState();
     const [image, setImage] = useState(null);
+    const navigate = useNavigate();
 
     const addProduct = async (e) => {
         e.preventDefault();
@@ -19,6 +21,7 @@ export default function AddProduct() {
         axios.post('https://localhost:7277/Product/Create', formData)
             .then((response) => {
                 console.log(response.data);
+                navigate("/Product")
             })
             .catch((error) => {
                 //add toast

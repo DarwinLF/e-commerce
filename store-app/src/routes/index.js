@@ -5,6 +5,8 @@ import Layout from "../components/layout";
 import Home from "../components/home";
 import Product from "../components/Product/product";
 import AddProduct from "../components/Product/addProduct";
+import EditProduct from "../components/Product/editProduct";
+import DeleteProduct from "../components/Product/deleteProduct";
 import Cart from "../components/Cart/Cart";
 import Signup from "../components/Signup/Signup";
 import Login from "../components/Login/Login";
@@ -44,6 +46,16 @@ const Routes = () => {
                     path: "/AddProduct",
                     loader: () => (userRole === "Admin" ? null : redirect("/")),
                     element: <AddProduct/>,
+                },
+                {
+                    path: "/EditProduct/:productId",
+                    loader: () => (userRole === "Admin" ? null : redirect("/")),
+                    element: <EditProduct/>,
+                },
+                {
+                    path: "/DeleteProduct/:productId",
+                    loader: () => (userRole === "Admin" ? null : redirect("/")),
+                    element: <DeleteProduct/>,
                 },
             ],
         },

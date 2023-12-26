@@ -20,7 +20,7 @@ namespace ProductManager.Controllers
 
         // GET: ProductController
         [HttpGet(Name = "GetProducts")]
-        public async Task<ActionResult<List<ProductDTO>>> Index()
+        public async Task<ActionResult<List<Product>>> Index()
         {
             List<Product> products = await _context.Products.ToListAsync();
 
@@ -29,29 +29,17 @@ namespace ProductManager.Controllers
                 return NotFound("No products found");
             }
 
-            List<ProductDTO> productsDTO = new List<ProductDTO>();
-
             foreach (var item in products)
             {
-                productsDTO.Add(new ProductDTO()
-                {
-                    Name = item.Name,
-                    Price = item.Price,
-                    Quantity = item.Quantity,
-                    Image = functions.GetImage(item.Image)
-                });
+                item.Image = functions.GetImage(item.Image);
             }
 
-            Console.WriteLine(products[0].Image);
-            Console.WriteLine(productsDTO[0].Image);
-
-
-            return productsDTO;
+            return products;
         }
 
         // GET: ProductController/Details/5
         [HttpGet("Details")]
-        public async Task<ActionResult<Product>> Details(int id)
+        public async Task<ActionResult<ProductDTO>> Details(int id)
         {
             Product? product = await _context.Products.Select(p => new Product
             {
@@ -68,7 +56,16 @@ namespace ProductManager.Controllers
             }
             else
             {
-                return product;
+                ProductDTO productDTO = new ProductDTO
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Quantity = product.Quantity,
+                    Image = functions.GetImage(product.Image),
+                    fileName = Path.GetFileName(product.Image),
+                };
+                return productDTO;
             }
         }
 
@@ -116,29 +113,52 @@ namespace ProductManager.Controllers
         [HttpPut("Edit")]
         [Authorize(Roles = "Admin")]
         //[ValidateAntiForgeryToken]
-        public async Task<HttpStatusCode> Edit(Product product)
+        public async Task<IActionResult> Edit(int id)
         {
-            Product? oldProduct = await _context.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
-            if(oldProduct != null) {
-                oldProduct.Name = product.Name;
-                oldProduct.Price = product.Price;
-                oldProduct.Quantity = product.Quantity;
-                oldProduct.Image = product.Image;
-                await _context.SaveChangesAsync();
-                return HttpStatusCode.OK;
-            }
+            try
+            {
+                var imageFile = Request.Form.Files[0];
 
-            return HttpStatusCode.NotFound;
+                var filePath = "./Images/" + imageFile.FileName;
+
+                Product? oldProduct = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+
+                if (oldProduct != null)
+                {
+                    oldProduct.Name = Request.Form["name"];
+                    oldProduct.Price = float.Parse(Request.Form["price"]);
+                    oldProduct.Quantity = Int32.Parse(Request.Form["quantity"]);
+                    oldProduct.Image = filePath;
+                    await _context.SaveChangesAsync();
+
+                    if (!System.IO.File.Exists(filePath))
+                    {
+                        using (var fileStream = System.IO.File.Create(filePath))
+                        {
+                            imageFile.CopyTo(fileStream);
+                        }
+                    }
+
+                    return Ok(oldProduct);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Duplicate Name");
+            }
 
         }
 
         // POST: ProductController/Delete/5
-        [HttpDelete("Delete/{Id}")]
+        [HttpDelete("Delete")]
         [Authorize(Roles = "Admin")]
         //[ValidateAntiForgeryToken]
         public async Task<HttpStatusCode> Delete(int id)
         {
             Product? product = await _context.Products.FirstOrDefaultAsync(product => product.Id == id);
+            Console.WriteLine(product.Name);
             if(product != null)
             {
                 _context.Products.Remove(product);

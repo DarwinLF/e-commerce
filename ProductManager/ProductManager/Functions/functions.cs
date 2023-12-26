@@ -18,8 +18,6 @@
                     // Convert the buffer to a Base64 string
                     string base64String = Convert.ToBase64String(buffer);
 
-                    // Display the Base64 string
-                    Console.WriteLine(base64String);
                     return base64String;
                 }
             }
