@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import { useAuth } from "../../provider/authProvider";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import Product from "./product";
@@ -63,7 +63,7 @@ export default function ProductList() {
         setMaxValue(maxValue);
     }
 
-    const filterProducts = useCallback(() => {
+    function filterProducts() {
         let filterProducts = products;
 
         if (maxValue >= minValue || !maxValue || !minValue) {
@@ -77,18 +77,24 @@ export default function ProductList() {
         }
 
         if(search) {
-            console.log(search);
-
             filterProducts = filterProducts.filter(product => product.name.toLowerCase().includes(search.toLowerCase()));
         }
         
         setFilteredProducts(filterProducts);
-    }, [minValue, maxValue, products]);
+    }
+
+    function handleSearchChange(event) {
+        setSearch(event.target.value);
+    }
 
     function handleEnterPress(event) {
         if(event.key === 'Enter') {
             filterProducts();
         }
+    }
+
+    function handleSearchClick() {
+        filterProducts();
     }
 
     useEffect(() => {
@@ -117,16 +123,13 @@ export default function ProductList() {
                 });
 
                 setProducts(processedProducts);
+                setFilteredProducts(processedProducts);
             })
             .catch(error => {
                 console.error(error.response);
             });
         
     }, []);
-
-    useEffect(() => {
-        filterProducts();
-    }, [filterProducts]);
 
     return (
         <div className="container mt-5 py-4 px-xl-5">
@@ -152,10 +155,10 @@ export default function ProductList() {
                                         placeholder="Search products..."
                                         aria-label="search input"
                                         value={search}
-                                        onChange={(e) => setSearch(e.target.value)}
+                                        onChange={handleSearchChange}
                                         onKeyDown={handleEnterPress}
                                     />
-                                    <button className="btn btn-outline-dark" onClick={() => filterProducts()}>
+                                    <button className="btn btn-outline-dark" onClick={handleSearchClick}>
                                         <FontAwesomeIcon icon={["fas", "search"]} />
                                     </button>
                                 </div>

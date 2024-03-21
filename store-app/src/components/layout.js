@@ -3,12 +3,10 @@ import { Outlet, Link} from "react-router-dom";
 import { useAuth } from "../provider/authProvider";
 import LogoutButton from "./LogoutButton";
 import { useEffect, useState } from "react";
-import axios from 'axios';
 
 const Layout = (props) => {
     const {profileUserName, userRole} = useAuth();
     const [openedDrawer, setOpenedDrawer] = useState(false)
-    //const [cartAmount, setCartAmount] = useState(0)
 
     function toggleDrawer() {
       setOpenedDrawer(!openedDrawer);
@@ -24,7 +22,7 @@ const Layout = (props) => {
       if(userRole === "User") {
         props.getCartAmount();
       }
-    }, []);
+    }, [props, userRole]);
 
     return (
         <>
