@@ -19,18 +19,22 @@ export default function ProductDetails(props) {
         }
 
         if(quantity > stock) {
-            //tengo que verificar lo que hay en el carro del cliente actual para que la cantidad en el carro mas la que se desea ingresar actualmente no supere a la cantidad total
             alert("The quantity to buy is more that is in stock");
+            return;
         }
 
         axios.post(`https://localhost:7277/Cart/Add`, {ProductName: name, quantity, userName: profileUserName})
             .then((response) => {
-                console.log(response.status);
-                alert("Success");
-                props.getCartAmount();
+                console.log(response);
+                if ( response.data === 409) {
+                    alert("The quantity to buy plus the quantity in the cart is more that is in stock");
+                }
+                else {
+                    alert("Success");
+                    props.getCartAmount();
+                }
             })
             .catch((error) => {
-                //add toast
                 if(error.response.status === 401) {
                     alert("Need to Login");
                 }

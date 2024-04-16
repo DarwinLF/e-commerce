@@ -7,9 +7,6 @@ import Product from "./product";
 import ProductH from "./productH";
 
 function FilterMenuLeft(props) {
-    const [minValue, setMinValue] = useState();
-    const [maxValue, setMaxValue] = useState();
-
     return(
         <ul className="list-group list-group-flush rounded">
             <li className="list-group-item">
@@ -20,8 +17,8 @@ function FilterMenuLeft(props) {
                             type="number"
                             className="form-control"
                             placeholder="Min"
-                            value={minValue}
-                            onChange={(e) => setMinValue(e.target.value)}
+                            value={props.minValue}
+                            onChange={(e) => props.setMinValue(e.target.value)}
                         />
                         <label htmlFor="floatingInput">Min Price</label>
                     </div>
@@ -30,12 +27,12 @@ function FilterMenuLeft(props) {
                             type="number"
                             className="form-control"
                             placeholder="Max"
-                            value={maxValue}
-                            onChange={(e) => setMaxValue(e.target.value)}
+                            value={props.maxValue}
+                            onChange={(e) => props.setMaxValue(e.target.value)}
                         />
                         <label htmlFor="floatingInput">Max Price</label>
                     </div>
-                    <button className="btn btn-dark" onClick={() => props.searchPriceRange(minValue, maxValue)}>Apply</button>
+                    <button className="btn btn-dark" onClick={() => props.filterProducts()}>Apply</button>
                 </div>
             </li>
         </ul>
@@ -56,11 +53,6 @@ export default function ProductList() {
         setViewType({
         grid: !viewType.grid,
         });
-    }
-
-    function searchPriceRange(minValue, maxValue) {
-        setMinValue(minValue);
-        setMaxValue(maxValue);
     }
 
     function filterProducts() {
@@ -136,7 +128,7 @@ export default function ProductList() {
             <div className="row mb-4 mt-lg-3">
                 <div className="d-none d-lg-block col-lg-3">
                     <div className="border rounded shadow-sm">
-                        <FilterMenuLeft searchPriceRange={searchPriceRange}/>
+                        <FilterMenuLeft filterProducts={filterProducts} minValue={minValue} setMinValue={setMinValue} maxValue={maxValue} setMaxValue={setMaxValue}/>
                     </div>
                 </div>
                 <div className="col-lg-9">

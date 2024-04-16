@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "D:\\Github\\e-commerce\\ProductManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|d:\\github\\e-commerce\\productmanager\\productmanager\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|solutionrelative:productmanager\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|d:\\github\\e-commerce\\productmanager\\productmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|solutionrelative:productmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|d:\\github\\e-commerce\\productmanager\\productmanager\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|solutionrelative:productmanager\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|d:\\github\\e-commerce\\productmanager\\productmanager\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|solutionrelative:productmanager\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|d:\\github\\e-commerce\\productmanager\\productmanager\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|solutionrelative:productmanager\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|d:\\github\\e-commerce\\productmanager\\productmanager\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|solutionrelative:productmanager\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|d:\\github\\e-commerce\\productmanager\\productmanager\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|solutionrelative:productmanager\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|d:\\github\\e-commerce\\productmanager\\productmanager\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A91991D-8F22-479A-9757-61E09E855A6D}|ProductManager\\ProductManager.csproj|solutionrelative:productmanager\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,83 +26,59 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "ProductManager\\appsettings.Development.json",
-              "ToolTip": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\appsettings.Development.json",
-              "RelativeToolTip": "ProductManager\\appsettings.Development.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-03-20T23:57:30.276Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CartController.cs",
-              "DocumentMoniker": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Controllers\\CartController.cs",
-              "RelativeDocumentMoniker": "ProductManager\\Controllers\\CartController.cs",
-              "ToolTip": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Controllers\\CartController.cs",
-              "RelativeToolTip": "ProductManager\\Controllers\\CartController.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAAwwE0AAABIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-13T23:30:29.51Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\appsettings.json",
-              "RelativeDocumentMoniker": "ProductManager\\appsettings.json",
-              "ToolTip": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\appsettings.json",
-              "RelativeToolTip": "ProductManager\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2023-12-26T23:25:32.292Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Program.cs",
-              "RelativeDocumentMoniker": "ProductManager\\Program.cs",
-              "ToolTip": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Program.cs",
-              "RelativeToolTip": "ProductManager\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-12-26T23:25:23.453Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "AuthService.cs",
               "DocumentMoniker": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "ProductManager\\Services\\AuthService.cs",
               "ToolTip": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Services\\AuthService.cs",
               "RelativeToolTip": "ProductManager\\Services\\AuthService.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAowD4AAAAzAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAQwBsAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-12-26T23:25:01.95Z"
+              "WhenOpened": "2024-04-16T20:35:54.696Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "UserController.cs",
               "DocumentMoniker": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "ProductManager\\Controllers\\UserController.cs",
               "ToolTip": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Controllers\\UserController.cs",
               "RelativeToolTip": "ProductManager\\Controllers\\UserController.cs",
-              "ViewState": "AQIAADMAAAAAAAAAAAAowAAAAAAAAAAA",
+              "ViewState": "AQIAABYAAAAAAAAAAAAgwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-12-26T23:24:51.619Z"
+              "WhenOpened": "2024-04-16T20:35:34.274Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "ProductManager\\Controllers\\CartController.cs",
+              "ToolTip": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Controllers\\CartController.cs",
+              "RelativeToolTip": "ProductManager\\Controllers\\CartController.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAowDgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-16T20:01:53.461Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "ProductManager\\Controllers\\ProductController.cs",
+              "ToolTip": "D:\\Github\\e-commerce\\ProductManager\\ProductManager\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "ProductManager\\Controllers\\ProductController.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAowAYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T18:11:17.037Z",
+              "EditorCaption": ""
             }
           ]
         }

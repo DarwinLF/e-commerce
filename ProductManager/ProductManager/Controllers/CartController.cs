@@ -55,14 +55,7 @@ namespace ProductManager.Controllers
                 .Select(c => c.ProductCarts.Count())
                 .FirstOrDefault();
 
-            if (cartProductCount == 0)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return cartProductCount;
-            }
+            return cartProductCount;
         }
 
         // POST: ProductController/Create
@@ -75,7 +68,10 @@ namespace ProductManager.Controllers
                 await MakeNewCart(cartDTO.UserName);
             }
 
-            await AddProductToCart(cartDTO.ProductName, cartDTO.Quantity, cartDTO.UserName);
+            if (!await AddProductToCart(cartDTO.ProductName, cartDTO.Quantity, cartDTO.UserName))
+            {
+                return HttpStatusCode.Conflict;
+            }
 
             return HttpStatusCode.OK;
         }
@@ -101,7 +97,7 @@ namespace ProductManager.Controllers
             await _context.SaveChangesAsync();
         }
 
-        private async Task AddProductToCart(string productName, int quantity, string userName)
+        private async Task<bool> AddProductToCart(string productName, int quantity, string userName)
         {
             Cart? cart = await _context.Carts.Include(c => c.ProductCarts).FirstOrDefaultAsync(c => c.UserName == userName);
             Product product = await _context.Products.FirstOrDefaultAsync(p => p.Name == productName);
@@ -109,6 +105,12 @@ namespace ProductManager.Controllers
             if(cart.ProductCarts.Any(pc => pc.ProductId == product.Id))
             {
                 int productInCartIndex = cart.ProductCarts.FindIndex(pc => pc.ProductId == product.Id);
+
+                if (product.Quantity - cart.ProductCarts[productInCartIndex].ProductQuantity < quantity)
+                {
+                    return false;
+                }
+
                 cart.ProductCarts[productInCartIndex].ProductQuantity += quantity;
             }
             else
@@ -120,6 +122,8 @@ namespace ProductManager.Controllers
             cart.TotalPrice += product.Price * quantity;
 
             await _context.SaveChangesAsync();
+
+            return true;
         }
 
         //// POST: ProductController/Edit/5
